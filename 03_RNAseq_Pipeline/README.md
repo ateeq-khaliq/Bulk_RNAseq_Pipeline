@@ -1,4 +1,4 @@
-```markdown
+
 # Comprehensive Bulk RNA-seq Analysis Pipeline
 
 ## Table of Contents
