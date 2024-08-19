@@ -1,3 +1,4 @@
+```markdown
 # Comprehensive Bulk RNA-seq Analysis Pipeline
 
 ## Table of Contents
@@ -48,117 +49,112 @@ To run this pipeline, you need:
 ## Installation
 
 1. Clone this repository:
-git clone https://github.com/yourusername/bulk-rnaseq-pipeline.git
-cd bulk-rnaseq-pipeline
+   ```
+   git clone https://github.com/yourusername/bulk-rnaseq-pipeline.git
+   cd bulk-rnaseq-pipeline
+   ```
 
 2. Create and activate the conda environment:
-conda env create -f environment.yml
-conda activate rnaseq_env
+   ```
+   conda env create -f environment.yml
+   conda activate rnaseq_env
+   ```
 
 3. Ensure you have the necessary R packages installed:
-```R
-if (!requireNamespace("BiocManager", quietly = TRUE))
-    install.packages("BiocManager")
+   ```R
+   if (!requireNamespace("BiocManager", quietly = TRUE))
+       install.packages("BiocManager")
+   
+   BiocManager::install(c("tximport", "readr", "dplyr"))
+   ```
 
-BiocManager::install(c("tximport", "readr", "dplyr"))
-Usage
+## Usage
 
-Edit the complete_rnaseq_pipeline.sh script to set your project-specific parameters:
+1. Edit the `complete_rnaseq_pipeline.sh` script to set your project-specific parameters:
+   - `BASE_DIR`: Path to your project directory
+   - SLURM parameters (nodes, tasks, CPUs, memory, etc.)
+   - Email for job notifications
 
-BASE_DIR: Path to your project directory
-SLURM parameters (nodes, tasks, CPUs, memory, etc.)
-Email for job notifications
+2. Make the script executable:
+   ```
+   chmod +x complete_rnaseq_pipeline.sh
+   ```
 
+3. Submit the job to SLURM:
+   ```
+   sbatch complete_rnaseq_pipeline.sh
+   ```
 
-Make the script executable:
-chmod +x complete_rnaseq_pipeline.sh
-Submit the job to SLURM:
-sbatch complete_rnaseq_pipeline.sh
-Pipeline Steps
+## Pipeline Steps
 
-Download Reference Files:
+1. **Download Reference Files**:
+   - Reference genome (GRCh38 no-alt analysis set)
+   - Gene annotation (GENCODE v36)
+   - Generate transcript-to-gene mapping file
 
-Reference genome (GRCh38 no-alt analysis set)
-Gene annotation (GENCODE v36)
-Generate transcript-to-gene mapping file
+2. **Generate Transcriptome**:
+   - Use gffread to create a transcriptome FASTA file from the genome and annotation
 
+3. **Create Salmon Index**:
+   - Build an index of the transcriptome for efficient quantification
 
-Generate Transcriptome:
+4. **Salmon Quantification**:
+   - Process each BAM file with Salmon to quantify transcript expression
+   - Apply GC bias and sequence-specific bias correction
 
-Use gffread to create a transcriptome FASTA file from the genome and annotation
+5. **Create Sample Sheet**:
+   - Generate a file listing all processed samples and their quantification files
 
+6. **Generate Count Matrices**:
+   - Use R and tximport to create gene-level count and TPM matrices
 
-Create Salmon Index:
+## Output Files
 
-Build an index of the transcriptome for efficient quantification
-
-
-Salmon Quantification:
-
-Process each BAM file with Salmon to quantify transcript expression
-Apply GC bias and sequence-specific bias correction
-
-
-Create Sample Sheet:
-
-Generate a file listing all processed samples and their quantification files
-
-
-Generate Count Matrices:
-
-Use R and tximport to create gene-level count and TPM matrices
-
-
-
-Output Files
 The pipeline generates the following key output files:
 
-gene_count_matrix.csv: A matrix of raw gene counts for all samples
-gene_tpm_matrix.csv: A matrix of TPM-normalized gene expression values for all samples
-Individual Salmon quantification directories for each sample
-samples.txt: A sample sheet listing all processed samples
+1. `gene_count_matrix.csv`: A matrix of raw gene counts for all samples
+2. `gene_tpm_matrix.csv`: A matrix of TPM-normalized gene expression values for all samples
+3. Individual Salmon quantification directories for each sample
+4. `samples.txt`: A sample sheet listing all processed samples
 
-Customization
-You can customize the pipeline by modifying the complete_rnaseq_pipeline.sh script. Common customizations include:
+## Customization
 
-Adjusting SLURM parameters for your computing environment
-Changing the reference genome or annotation versions
-Modifying Salmon parameters for specific analysis needs
-Altering the R script to perform additional downstream analyses
+You can customize the pipeline by modifying the `complete_rnaseq_pipeline.sh` script. Common customizations include:
 
-Troubleshooting
+- Adjusting SLURM parameters for your computing environment
+- Changing the reference genome or annotation versions
+- Modifying Salmon parameters for specific analysis needs
+- Altering the R script to perform additional downstream analyses
+
+## Troubleshooting
+
 Common issues and their solutions:
 
-Missing reference files: Ensure you have internet access to download reference files, or manually place them in the BASE_DIR.
-Insufficient disk space: Check that your project directory has enough space for reference files and output.
-Memory errors: Adjust the --mem parameter in the SLURM header if you encounter out-of-memory errors.
-Missing R packages: Ensure all required R packages are installed in your conda environment.
+1. **Missing reference files**: Ensure you have internet access to download reference files, or manually place them in the `BASE_DIR`.
+2. **Insufficient disk space**: Check that your project directory has enough space for reference files and output.
+3. **Memory errors**: Adjust the `--mem` parameter in the SLURM header if you encounter out-of-memory errors.
+4. **Missing R packages**: Ensure all required R packages are installed in your conda environment.
 
-Contributing
+## Contributing
+
 We welcome contributions to improve this pipeline. Please feel free to submit issues or pull requests on GitHub.
-License
-This project is licensed under the MIT License - see the LICENSE.md file for details.
-Acknowledgments
 
-The developers of Salmon, gffread, and the R/Bioconductor community
-The GENCODE project for providing comprehensive gene annotations
-The high-performance computing support team at [Your Institution]
+## License
 
-Contact
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+
+## Acknowledgments
+
+- The developers of Salmon, gffread, and the R/Bioconductor community
+- The GENCODE project for providing comprehensive gene annotations
+- The high-performance computing support team at Indiana University
+
+## Contact
+
 For questions or support, please contact:
-Ateeq Khaliq
+Ateeq Khaliq - akhaliq@iu.edu
+
+---
 
 We hope this pipeline proves useful for your RNA-seq analysis needs. Happy sequencing!
-This README provides a comprehensive overview of your RNA-seq analysis pipeline. It includes detailed information about the pipeline's purpose, components, installation process, usage instructions, and output. The structure is designed to be easily navigable, with a table of contents and clear section headers.
-
-To make it even more appealing on GitHub:
-
-1. Consider adding some badges at the top of the README (e.g., license, version, build status).
-2. You could include some images or diagrams to illustrate the pipeline workflow.
-3. If you have example data or test cases, mention them in the README and provide instructions on how to run them.
-4. You might want to add a section on citing this work if it's used in academic research.
-
-Remember to replace placeholders like `[Your Name]`, `[your.email@example.com]`, and `[Your Institution]` with your actual information. Also, make sure to create and include the `LICENSE.md` file if you mention it in the README.
-
-This README should provide a good starting point for documenting your pipeline on GitHub. Feel free to adjust it as needed to best represent your specific project and its requirements.
-
+```
