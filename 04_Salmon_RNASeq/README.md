@@ -1,43 +1,50 @@
 
-# Bulk RNA-Seq Pipeline
+# 🚀 Bulk RNA-Seq Pipeline 🚀
 
-This repository contains a comprehensive Bulk RNA-Seq Pipeline designed to handle alignment-based quantification using Salmon. The pipeline was developed and tested on a high-performance computing environment and is designed to process multiple samples efficiently.
+Welcome to the **Bulk RNA-Seq Pipeline** repository! This pipeline is designed to process and quantify RNA-Seq data using alignment-based quantification with Salmon. It automates the preparation of reference files, runs the Salmon quantification step, and generates final output matrices for downstream analysis. The pipeline is optimized for use in high-performance computing environments.
 
-## Introduction
+## 🧬 Introduction
 
-This pipeline automates the process of RNA-Seq data quantification using Salmon in alignment-based mode. It takes as input BAM files aligned to a reference genome and outputs quantification results, including counts and normalized TPM values.
+The Bulk RNA-Seq Pipeline provides a streamlined approach to RNA-Seq data analysis. It starts from BAM files, aligns them to a reference genome, and produces gene-level quantification output. This pipeline is especially useful for large-scale RNA-Seq projects where alignment-based quantification is needed.
 
-### Key Features:
-- **Alignment-based quantification using Salmon**
-- **Automatic download and preparation of reference files (GRCh37/hg19 and GENCODE v19)**
-- **Handling of GC bias and sequence bias corrections**
-- **Generation of gene count and TPM matrices using R**
+### Key Features
+- **Alignment-based quantification using Salmon v1.10.3**
+- **Automatic handling of reference genome and annotation downloads**
+- **GC bias and sequence bias correction**
+- **Generation of gene count and TPM matrices in a single run**
 
-## Pipeline Overview
+## 📋 Pipeline Overview
 
-The pipeline consists of the following main steps:
-1. **Download and prepare reference files**: Downloads the GRCh37/hg19 reference genome and GENCODE v19 annotation files if not already present.
-2. **Salmon quantification**: Runs Salmon in alignment-based mode to quantify RNA-Seq data from BAM files.
-3. **Gene count and TPM matrices**: Creates a gene count matrix and a normalized TPM matrix using R.
+This pipeline is structured into several stages:
 
-## Installation
+1. **Setup**: Ensures that the reference genome and annotation files (GRCh37/hg19 and GENCODE v19) are available. If not, it downloads them.
+2. **Reference Preparation**: Prepares the reference files, including removing unwanted prefixes from the GTF file and ensuring consistent chromosome naming.
+3. **Quantification with Salmon**: Runs the Salmon quantification step using alignment-based mode, with bias correction enabled.
+4. **Output Generation**: After quantification, the pipeline generates two output matrices:
+   - **Gene Count Matrix**: A CSV file with raw gene counts.
+   - **TPM Matrix**: A CSV file with normalized TPM values.
 
-To run this pipeline, follow these steps:
+## 🛠️ Installation
 
-1. Clone the repository:
+Follow these steps to get the pipeline up and running:
+
+1. **Clone the repository**:
 
     ```bash
     git clone https://github.com/your-username/bulk-rnaseq-pipeline.git
     cd bulk-rnaseq-pipeline
     ```
 
-2. Ensure that you have the following dependencies installed:
-   - **Miniconda**
-   - **Salmon**
-   - **gffread**
-   - **R** with the required packages (`tximport`, `readr`, `dplyr`)
+2. **Set up the environment**:
 
-3. Create a conda environment:
+   Ensure you have the necessary tools installed:
+
+   - **Miniconda**
+   - **Salmon v1.10.3**
+   - **gffread**
+   - **R** with the following packages: `tximport`, `readr`, `dplyr`
+
+   Create and activate a conda environment:
 
     ```bash
     conda create -n spatial python=3.11
@@ -45,45 +52,70 @@ To run this pipeline, follow these steps:
     conda install salmon gffread r-base
     ```
 
-## Usage
+3. **Modify paths if necessary**:
 
-1. Copy the provided script (`bulk_rnaseq_pipeline.sh`) to your working directory.
-2. Ensure that your BAM files are organized in the expected directory structure.
-3. Run the script with `sbatch` to submit it as a job:
+   Ensure that all paths in the script are correct for your environment.
+
+## 🚀 Usage
+
+1. **Prepare your BAM files**: Organize your BAM files in directories corresponding to each sample.
+2. **Run the pipeline**: Submit the job to your cluster using the `sbatch` command:
 
     ```bash
     sbatch bulk_rnaseq_pipeline.sh
     ```
 
-The output files will be generated in the `salmon_output` directory, including the gene count matrix and TPM matrix.
+   The pipeline will automatically process all samples and generate output files in the `salmon_output` directory.
 
-## Challenges and Solutions
+## 🔍 Input and Output
+
+### Input:
+- **BAM files**: Aligned RNA-Seq reads in BAM format.
+- **Reference genome**: GRCh37/hg19 (automatically downloaded if not available).
+- **Gene annotation**: GENCODE v19 GTF file (also downloaded if not available).
+
+### Output:
+- **Gene Count Matrix**: `gene_count_matrix.csv`
+- **TPM Matrix**: `gene_tpm_matrix.csv`
+- **Salmon Logs**: Detailed logs for each sample’s quantification process.
+
+## 🛠️ Troubleshooting: Challenges and Solutions
 
 ### 1. Missing Contigs in the Transcriptome FASTA
-**Problem**: The initial Salmon quantification step failed due to missing contigs (e.g., `GL000192.1`) in the transcriptome FASTA file generated from the GTF.
+**Problem**: Salmon failed due to missing contigs in the transcriptome FASTA, leading to errors.
 
-**Solution**: The transcriptome FASTA file was regenerated to include all contigs present in the BAM file header using `gffread` and the full GRCh37 reference genome.
+**Solution**: The transcriptome FASTA file was regenerated using the full GRCh37 reference genome and GENCODE v19 annotation. This ensured that all contigs present in the BAM file header were included.
 
 ### 2. Alignment-Based Mode Configuration
-**Problem**: When running Salmon in alignment-based mode, certain options were not recognized, such as the `-t` option intended for transcriptome-based quantification.
+**Problem**: The pipeline initially used options intended for transcriptome-based quantification, which caused errors in alignment-based mode.
 
-**Solution**: The script was updated to correctly configure Salmon for alignment-based mode by removing the `-t` option and ensuring the `--targets` option was used to specify the reference genome.
+**Solution**: The script was modified to remove incorrect options and use alignment-based mode configuration. The `--targets` option was added to specify the reference genome.
 
 ### 3. Inconsistent Chromosome Naming
-**Problem**: The pipeline encountered issues with inconsistent chromosome naming, particularly with the mitochondrial chromosome (`M` vs `MT`).
+**Problem**: The pipeline encountered issues with inconsistent chromosome naming, particularly the mitochondrial chromosome (`M` vs `MT`).
 
-**Solution**: The GTF file was modified to ensure consistent chromosome naming by replacing `M` with `MT`.
+**Solution**: The GTF file was modified to ensure consistent chromosome naming by replacing `M` with `MT`, making it compatible with the reference genome.
 
-### 4. Unexpected Salmon Errors
-**Problem**: During the troubleshooting process, several unexpected errors surfaced, including missing options or failed steps in Salmon.
+### 4. Option Handling in Salmon
+**Problem**: Salmon required different options depending on the mode (alignment-based vs transcriptome-based). Errors were raised when incorrect options were used.
 
-**Solution**: Each error was carefully analyzed and resolved by adjusting the pipeline script, ensuring that the correct options were passed to Salmon and that all required files were available.
+**Solution**: The script was iteratively updated to handle Salmon’s specific requirements for alignment-based mode, ensuring proper option usage and configuration.
 
-## Final Notes
+## 📊 Final Output
 
-This pipeline has been extensively tested and is capable of handling complex RNA-Seq quantification tasks. It is designed to work efficiently in high-performance computing environments. We encourage others to use this pipeline and contribute to its further development.
+After successfully running the pipeline, you will obtain:
+- A **gene count matrix** (`gene_count_matrix.csv`) with raw counts.
+- A **TPM matrix** (`gene_tpm_matrix.csv`) with normalized transcript abundance.
 
-If you encounter any issues or have suggestions for improvements, please feel free to open an issue or submit a pull request.
+These matrices are ready for downstream analysis, including differential expression analysis, clustering, and visualization.
 
-### License
-This project is licensed under the MIT License.
+## 📝 Final Notes
+
+This Bulk RNA-Seq Pipeline is designed to be flexible, robust, and scalable. Whether you're processing a small number of samples or a large-scale RNA-Seq dataset, this pipeline provides a streamlined solution to get accurate quantification results.
+
+If you encounter any issues or have suggestions for improvements, please open an issue or submit a pull request. Contributions are welcome!
+
+## 📄 License
+
+This project is licensed under the MIT License. See the `LICENSE` file for more details.
+
