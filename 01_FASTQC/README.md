@@ -1,6 +1,6 @@
 # FastQC and Salmon Analysis Pipeline
 
-![Pipeline Logo](https://raw.githubusercontent.com/nf-core/rnaseq/master/docs/images/nf-core-rnaseq_logo_light.png)
+![FastQC Logo](https://raw.githubusercontent.com/s-andrews/FastQC/master/src/main/resources/uk/ac/babraham/FastQC/Resources/fastqc_icon.png)
 
 ## Table of Contents
 
@@ -128,9 +128,9 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 For any queries regarding this analysis pipeline, please contact:
 
-**Ahmad Khaliq**  
+**Ateeq Khaliq**  
 Email: akhaliq@iu.edu
 
 ---
 
-<p align="center">Created with ❤️ by the Genomics Research Team</p>
+<p align="center">Created with ❤️ by Ateeq Khaliq</p>
