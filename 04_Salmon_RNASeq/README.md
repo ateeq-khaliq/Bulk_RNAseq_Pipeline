@@ -138,7 +138,7 @@ Before you begin, ensure you have the following:
     1. Gene Count Matrix: Raw count data (`gene_count_matrix.csv`).
     2. TPM Matrix: Normalized expression values (`gene_tpm_matrix.csv`).
 
-[Previous content remains the same up to the Troubleshooting section]
+
 
 ## 🛠️ Troubleshooting
 
@@ -162,7 +162,7 @@ Before you begin, ensure you have the following:
 
 </details>
 
-[The rest of the content remains the same]
+
 
 ## 📊 Output
 
