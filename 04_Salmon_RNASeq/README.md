@@ -1,138 +1,178 @@
-```ascii
- ____        _ _      ____  _   _    _       ____            ____  _            _ _            
-|  _ \      | | |    |  _ \| \ | |  / \     / ___|  ___  __ |  _ \(_)_ __   ___| (_)_ __   ___ 
-| |_) |_   _| | | __ | |_) |  \| | / _ \    \___ \ / _ \/ _ \ |_) | | '_ \ / _ \ | | '_ \ / _ \
-|  _ <| | | | | |/ / |  _ <| |\  |/ ___ \    ___) |  __/  __/  __/| | |_) |  __/ | | | | |  __/
-|_| \_\ |_|_|_|_|___||_| \_\_| \_/_/   \_\  |____/ \___|\___| |  _|_| .__/ \___| |_|_| |_|\___|
-                                                                       |_|                     
-```
+<h1 align="center">
+  <br>
+  <img src="https://raw.githubusercontent.com/s-andrews/FastQC/master/src/main/resources/uk/ac/babraham/FastQC/Resources/fastqc_icon.png" alt="Bulk RNA-Seq Pipeline" width="200">
+  <br>
+  Bulk RNA-Seq Pipeline
+  <br>
+</h1>
 
-# 🧬 Bulk RNA-Seq Pipeline 🚀
+<h4 align="center">A comprehensive pipeline for processing and quantifying RNA-Seq data using Salmon</h4>
 
-Welcome to the **Bulk RNA-Seq Pipeline** repository! This pipeline is designed to process and quantify RNA-Seq data using alignment-based quantification with Salmon. It automates the preparation of reference files, runs the Salmon quantification step, and generates final output matrices for downstream analysis.
+<p align="center">
+  <a href="#key-features">Key Features</a> •
+  <a href="#how-to-use">How To Use</a> •
+  <a href="#detailed-workflow">Detailed Workflow</a> •
+  <a href="#troubleshooting">Troubleshooting</a> •
+  <a href="#output">Output</a> •
+  <a href="#license">License</a>
+</p>
 
-![Pipeline Overview](https://mermaid.ink/img/pako:eNp1kc9OwzAMxl8l8mmVtq7rn3U7bBxAaAhx4JZD27BFtHEVp2gT2rsTO-1AQoC4JP58P_uLE2YWHGbGrzqjbXF7X1h2OiZpnuepwRddMsFFw6BDI1toPLFBZ7_QSqT0V2JIpAn7xO1HQIdL5OPpgoIQC_-jLwgBx7GoqKuxZcqOdpmzf4pnMBdUcWv-nv5m3wF_x9kJrcZCVQaHKPVsKIUiKOuWtNVgPVY0TScZdezOHMZBJbOXyZXSXlGHDVsGRHqXY89Y0NjRF0sKfMc-g0f6ZA8R4hMgXvlhO8jvYXE4WV1XtYvCx_2T0z7ZKFhtl7i0aMvDqA8SDmgPOhzQ7sEJR0QbLCQ6Uad20_qqR9VoDHEDtg074Mzbe2nMXHU07zYj9A4z98xT_x8RR4-Z)
+<p align="center">
+  <img src="https://mermaid.ink/img/pako:eNqFk11v2jAUhv-K5auBEkjCR0IKu9hFpU2aNG3aRW-Q45yAF8eObAcYVf97bSdQoFSbLhLsnPc5r4-Pj-SaBSdYqLCqTG6p1SIvqUMPJlP5ylSJQBzBY5tPZZPhwGBNg2wC8-GMYFmDpLUhjGGeERpGiaqS-PzxfAY3t1cEP-DdIGbQNtQYrCgM4HhgaHwP1x4Md9BFsDLNn-Xg8Vhg8bQDdOXyL_0EGtYNCofUu_fQE7LMdqXnHXkIbKhAq2knzbkr-gG6lKUxlGeELSxwrWnTTBCeakOZz6qWOqk2pJhPaSEdLVu76fSl1cBKJTJTCyTzUoAsjVjRglBrXFIVhcGXRCyEe10nCzN_yCJ0yjT2uy8vdx_qZvWw6qbVQQhbq-Qk3OuS5Nz2MF0YXeK4R3_q0FKGQCM0gvCVpfLBSV2jNR5m9SG9pJX0e4DnRlfO9kH-IzV4_Kz7M-5pvQ-J-_vHXfSXnEgVp6N_1fHlFCGcrx-u-4Hj8TvHP0w-nE_C4Xg0-TwcwPn1zVU48lwMsP3lzcRzMcIB9GCQ5GWONhwkr_7GfgfjKFGiRC3PkQWl2OArlaLkRRtIgK-oTXhVbJNrVbIkFVSWVZwWUrHAubhNjVy4_3nRcqqVY0E0XOQbxLh2x3Gzxam5E8yCRuQ1dbuZDCL37w0Lcp7AynbNF9rWru6WBXUpnPR2p1UD7vVupkKpdOG6uzRQM8yzr_t_dQ3mj9Gj" alt="Pipeline Overview" width="800">
+</p>
 
 ## 🌟 Key Features
 
-- 🔍 Alignment-based quantification using **Salmon v1.10.3**
-- 🧠 Automatic handling of reference genome and annotation downloads
-- 🧮 GC bias and sequence bias correction
-- 📊 Generation of gene count and TPM matrices in a single run
-- 🚄 Processing of multiple samples in parallel
+- 🔍 **Alignment-based quantification** using Salmon v1.10.3
+- 🧠 **Automatic reference handling**: Downloads and prepares genome and annotation files
+- 🧮 **Bias correction**: Applies GC bias and sequence bias correction
+- 📊 **Comprehensive output**: Generates both gene count and TPM matrices
+- 🚄 **Parallel processing**: Efficiently handles multiple samples
+- 🔧 **Flexible and robust**: Adaptable to various RNA-Seq project scales
 
-## 📋 Table of Contents
+## 🚀 How To Use
 
-- [Introduction](#-introduction)
-- [Pipeline Overview](#-pipeline-overview)
-- [Installation](#️-installation)
-- [Usage](#-usage)
-- [Input and Output](#-input-and-output)
-- [Troubleshooting](#️-troubleshooting-challenges-and-solutions)
-- [Final Output](#-final-output)
-- [Final Notes](#-final-notes)
-- [License](#-license)
+### Prerequisites
 
-## 🧬 Introduction
+Before you begin, ensure you have the following installed:
+- SLURM workload manager
+- Miniconda or Anaconda
+- Git (for cloning the repository)
 
-The Bulk RNA-Seq Pipeline provides a streamlined approach to RNA-Seq data analysis. It starts from BAM files, aligns them to a reference genome, and produces gene-level quantification output. This pipeline is especially useful for large-scale RNA-Seq projects where alignment-based quantification is needed.
+### Installation
 
-## 📋 Pipeline Overview
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/your-username/bulk-rnaseq-pipeline.git
+   cd bulk-rnaseq-pipeline
+   ```
 
-This pipeline is structured into several stages:
+2. **Set up the Conda environment**
+   ```bash
+   conda create -n rnaseq_env python=3.11
+   conda activate rnaseq_env
+   conda install -c bioconda salmon=1.10.3 gffread
+   conda install -c r r-base r-tximport r-readr r-dplyr
+   ```
 
-1. **Setup** 🛠️: Ensures that the reference genome and annotation files (GRCh37/hg19 and GENCODE v19) are available. If not, it downloads them.
-2. **Reference Preparation** 📚: Prepares the reference files, including removing unwanted prefixes from the GTF file and ensuring consistent chromosome naming.
-3. **Quantification with Salmon** 🐟: Runs the Salmon quantification step using alignment-based mode, with bias correction enabled. The pipeline automatically detects and processes all BAM files in the input directory.
-4. **Output Generation** 📊: After quantification, the pipeline generates two output matrices:
-   - **Gene Count Matrix**: A CSV file with raw gene counts.
-   - **TPM Matrix**: A CSV file with normalized TPM values.
+3. **Configure the pipeline**
+   Edit the `bulk_rnaseq_pipeline.sh` script to set the correct paths for your environment:
+   ```bash
+   nano bulk_rnaseq_pipeline.sh
+   ```
+   Adjust the `BASE_DIR` variable to point to your project directory.
 
-## 🛠️ Installation
+### Running the Pipeline
 
-Follow these steps to get the pipeline up and running:
+1. **Prepare your data**
+   Organize your BAM files in the following structure:
+   ```
+   /N/project/cytassist/masood_colon_300/
+   ├── sample1/
+   │   └── RS.v2-RNA-*/
+   │       └── *_T_sorted.bam
+   ├── sample2/
+   │   └── RS.v2-RNA-*/
+   │       └── *_T_sorted.bam
+   └── ...
+   ```
 
-1. **Clone the repository**:
+2. **Submit the job**
+   ```bash
+   sbatch bulk_rnaseq_pipeline.sh
+   ```
 
-    ```bash
-    git clone https://github.com/your-username/bulk-rnaseq-pipeline.git
-    cd bulk-rnaseq-pipeline
-    ```
+3. **Monitor progress**
+   Check the status of your job:
+   ```bash
+   squeue -u your_username
+   ```
+   View the log file for detailed progress:
+   ```bash
+   tail -f slurm-JOBID.out
+   ```
 
-2. **Set up the environment**:
+## 📋 Detailed Workflow
 
-   Ensure you have the necessary tools installed:
+### 1. Setup and Preparation 🛠️
 
-   - **Miniconda**
-   - **Salmon v1.10.3**
-   - **gffread**
-   - **R** with the following packages: `tximport`, `readr`, `dplyr`
+- **Reference Genome Download**: 
+  - Checks for the existence of the GRCh37/hg19 reference genome.
+  - If not found, downloads it from the Ensembl FTP server.
+  - Decompresses the downloaded file.
 
-   Create and activate a conda environment:
+- **Gene Annotation Download**:
+  - Verifies the presence of the GENCODE v19 GTF file.
+  - Downloads the file if it's not available locally.
+  - Removes unwanted prefixes from chromosome names in the GTF file.
 
-    ```bash
-    conda create -n spatial python=3.11
-    conda activate spatial
-    conda install salmon gffread r-base
-    ```
+### 2. Transcriptome Generation 🧬
 
-3. **Modify paths if necessary**:
+- Uses `gffread` to generate a transcriptome FASTA file from the reference genome and GTF annotation.
+- Ensures all contigs present in BAM files are included in the transcriptome.
 
-   Ensure that all paths in the script are correct for your environment.
+### 3. Salmon Index Creation 📚
 
-## 🚀 Usage
+- Creates a Salmon index from the generated transcriptome FASTA file.
+- This index is used for efficient quantification in subsequent steps.
 
-1. **Prepare your BAM files**: Organize your BAM files in directories corresponding to each sample under the base directory (e.g., `/N/project/cytassist/masood_colon_300`). The script will automatically detect and process all BAM files in subdirectories that match the pattern `*/RS.v2-RNA-*`.
+### 4. Sample Processing 🔬
 
-2. **Run the pipeline**: Submit the job to your cluster using the `sbatch` command:
+- Iterates through all sample directories matching the pattern `*/RS.v2-RNA-*`.
+- For each sample:
+  - Locates the BAM file ending with `_T_sorted.bum`.
+  - Runs Salmon in alignment-based mode with the following settings:
+    - Applies GC bias correction
+    - Applies sequence-specific bias correction
+    - Uses 4 threads for parallel processing
 
-    ```bash
-    sbatch bulk_rnaseq_pipeline.sh
-    ```
+### 5. Matrix Generation 📊
 
-   The pipeline will automatically process all samples and generate output files in the `salmon_output` directory.
+- After all samples are processed, an R script is executed to:
+  - Import quantification results using `tximport`
+  - Generate two matrices:
+    1. Gene Count Matrix: Raw count data
+    2. TPM Matrix: Normalized expression values
 
-## 🔍 Input and Output
+## 🛠️ Troubleshooting
 
-### Input:
-- 📁 **BAM files**: Aligned RNA-Seq reads in BAM format. The pipeline automatically detects all BAM files ending with `_T_sorted.bam` in the subdirectories under the base directory.
-- 🧬 **Reference genome**: GRCh37/hg19 (automatically downloaded if not available).
-- 📘 **Gene annotation**: GENCODE v19 GTF file (also downloaded if not available).
+<details>
+<summary>Click to expand troubleshooting guide</summary>
 
-### Output:
-- 📊 **Quantification Results**: For each sample, the quantification results from Salmon are stored in a subdirectory under `salmon_output`, named after the sample.
-- 📈 **Gene Count Matrix**: `gene_count_matrix.csv`, located in the base directory.
-- 📉 **TPM Matrix**: `gene_tpm_matrix.csv`, located in the base directory.
-- 📝 **Salmon Logs**: Detailed logs for each sample's quantification process are stored within the corresponding sample subdirectory in `salmon_output`.
+| Issue | Symptom | Solution |
+|-------|---------|----------|
+| 🧩 Missing Contigs | Salmon fails due to missing reference sequences | Regenerate transcriptome FASTA with full genome |
+| 🔧 Incorrect Salmon Mode | Errors related to incompatible options | Ensure correct options for alignment-based mode |
+| 🔤 Chromosome Naming | Inconsistencies between BAM and reference | Standardize chromosome names (e.g., 'M' to 'MT') |
+| 💾 Memory Overflow | Job terminates due to insufficient memory | Increase `--mem` in SLURM script; reduce threads |
+| 🕒 Time Limit Exceeded | Job terminates before completion | Increase `--time` in SLURM script |
 
-## 🛠️ Troubleshooting: Challenges and Solutions
+</details>
 
-| Problem | Solution |
-|---------|----------|
-| 🧩 Missing Contigs in the Transcriptome FASTA | Regenerated transcriptome FASTA using full GRCh37 reference genome and GENCODE v19 annotation |
-| 🔧 Alignment-Based Mode Configuration | Modified script to use correct options for alignment-based mode |
-| 🔤 Inconsistent Chromosome Naming | Modified GTF file to ensure consistent chromosome naming |
-| ⚙️ Option Handling in Salmon | Updated script to handle Salmon's specific requirements for alignment-based mode |
-| 💾 Out of Memory (OOM) Issues | Adjusted memory allocation and reduced number of threads |
+## 📊 Output
 
-## 📊 Final Output
+The pipeline generates the following key outputs:
 
-After successfully running the pipeline, you will obtain:
-- 📁 **Quantification Results**: Each sample's quantification output is stored in a separate subdirectory under `salmon_output`.
-- 📈 **Gene Count Matrix** (`gene_count_matrix.csv`): Located in the base directory.
-- 📉 **TPM Matrix** (`gene_tpm_matrix.csv`): Located in the base directory.
+1. **Sample-specific Quantification Results**
+   - Location: `/N/project/cytassist/masood_colon_300/salmon_output/[SAMPLE_ID]_quant/`
+   - Contents:
+     - `quant.sf`: Salmon quantification file
+     - `cmd_info.json`: Command information
+     - `aux_info/`: Additional metadata and bias models
 
-These matrices are ready for downstream analysis, including differential expression analysis, clustering, and visualization.
+2. **Gene Count Matrix**
+   - File: `/N/project/cytassist/masood_colon_300/gene_count_matrix.csv`
+   - Format: CSV with genes as rows and samples as columns
+   - Content: Raw count data
 
-## 📝 Final Notes
-
-This Bulk RNA-Seq Pipeline is designed to be flexible, robust, and scalable. Whether you're processing a small number of samples or a large-scale RNA-Seq dataset, this pipeline provides a streamlined solution to get accurate quantification results.
-
-If you encounter any issues or have suggestions for improvements, please open an issue or submit a pull request. Contributions are welcome!
+3. **TPM Matrix**
+   - File: `/N/project/cytassist/masood_colon_300/gene_tpm_matrix.csv`
+   - Format: CSV with genes as rows and samples as columns
+   - Content: Normalized TPM (Transcripts Per Million) values
 
 ## 📄 License
 
-This project is licensed under the MIT License. See the `LICENSE` file for more details.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ---
 
@@ -142,5 +182,4 @@ This project is licensed under the MIT License. See the `LICENSE` file for more 
   <img src="https://img.shields.io/badge/Salmon-v1.10.3-ff69b4.svg" alt="Salmon v1.10.3">
 </p>
 
-<p align="center">🧬 Happy RNA-Seq Analysis! 🚀</p>
-```
+<h4 align="center">🧬 Elevate Your RNA-Seq Analysis with Precision and Efficiency 🚀</h4>
