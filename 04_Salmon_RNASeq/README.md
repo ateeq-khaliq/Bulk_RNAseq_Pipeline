@@ -138,6 +138,8 @@ Before you begin, ensure you have the following:
     1. Gene Count Matrix: Raw count data (`gene_count_matrix.csv`).
     2. TPM Matrix: Normalized expression values (`gene_tpm_matrix.csv`).
 
+[Previous content remains the same up to the Troubleshooting section]
+
 ## 🛠️ Troubleshooting
 
 <details>
@@ -150,8 +152,17 @@ Before you begin, ensure you have the following:
 | 📊 R Script Execution Error | Failure in matrix generation step | Verify R packages are correctly installed; check R script for syntax errors |
 | 🕒 Time Limit Exceeded | Job terminates before completion | Increase `--time` in SLURM script (currently set to 72 hours) |
 | 💾 Memory Overflow | Job terminates due to insufficient memory | Adjust `--mem` in SLURM script (currently set to 400G) |
+| 🧩 Missing Contigs in Transcriptome FASTA | Salmon fails due to missing reference sequences | Regenerate transcriptome FASTA using full GRCh37 reference genome and GENCODE v19 annotation |
+| 🔧 Incorrect Salmon Mode | Errors related to incompatible options | Ensure correct options for alignment-based mode are used (current script uses appropriate options) |
+| 🔤 Chromosome Naming Inconsistency | Mismatches between BAM and reference chromosome names | Script now standardizes chromosome names (removes 'chr' prefix, changes 'M' to 'MT') |
+| 🔍 Salmon Index Creation Failure | Error when creating Salmon index | Verify integrity of downloaded reference files; ensure sufficient disk space |
+| 📁 Input File Structure | Salmon fails to find input files | Ensure BAM files are correctly named (*_T_sorted.bam) and located in the expected directory structure |
+| 🧪 Sample Sheet Generation Error | Failure in creating samples.txt | Check write permissions in BASE_DIR; verify Salmon output structure |
+| 📈 tximport Error | R script fails during tximport step | Ensure tx2gene file is correctly generated; check Salmon output files for consistency |
 
 </details>
+
+[The rest of the content remains the same]
 
 ## 📊 Output
 
