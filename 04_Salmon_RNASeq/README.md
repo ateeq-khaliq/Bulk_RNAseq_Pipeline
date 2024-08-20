@@ -12,6 +12,7 @@ The Bulk RNA-Seq Pipeline provides a streamlined approach to RNA-Seq data analys
 - **Automatic handling of reference genome and annotation downloads**
 - **GC bias and sequence bias correction**
 - **Generation of gene count and TPM matrices in a single run**
+- **Processing of multiple samples**
 
 ## 📋 Pipeline Overview
 
@@ -19,7 +20,7 @@ This pipeline is structured into several stages:
 
 1. **Setup**: Ensures that the reference genome and annotation files (GRCh37/hg19 and GENCODE v19) are available. If not, it downloads them.
 2. **Reference Preparation**: Prepares the reference files, including removing unwanted prefixes from the GTF file and ensuring consistent chromosome naming.
-3. **Quantification with Salmon**: Runs the Salmon quantification step using alignment-based mode, with bias correction enabled.
+3. **Quantification with Salmon**: Runs the Salmon quantification step using alignment-based mode, with bias correction enabled. The pipeline automatically detects and processes all BAM files in the input directory.
 4. **Output Generation**: After quantification, the pipeline generates two output matrices:
    - **Gene Count Matrix**: A CSV file with raw gene counts.
    - **TPM Matrix**: A CSV file with normalized TPM values.
@@ -58,7 +59,8 @@ Follow these steps to get the pipeline up and running:
 
 ## 🚀 Usage
 
-1. **Prepare your BAM files**: Organize your BAM files in directories corresponding to each sample.
+1. **Prepare your BAM files**: Organize your BAM files in directories corresponding to each sample under the base directory (e.g., `/N/project/cytassist/masood_colon_300`). The script will automatically detect and process all BAM files in subdirectories that match the pattern `*/RS.v2-RNA-*`.
+
 2. **Run the pipeline**: Submit the job to your cluster using the `sbatch` command:
 
     ```bash
@@ -70,14 +72,15 @@ Follow these steps to get the pipeline up and running:
 ## 🔍 Input and Output
 
 ### Input:
-- **BAM files**: Aligned RNA-Seq reads in BAM format.
+- **BAM files**: Aligned RNA-Seq reads in BAM format. The pipeline automatically detects all BAM files ending with `_T_sorted.bam` in the subdirectories under the base directory.
 - **Reference genome**: GRCh37/hg19 (automatically downloaded if not available).
 - **Gene annotation**: GENCODE v19 GTF file (also downloaded if not available).
 
 ### Output:
-- **Gene Count Matrix**: `gene_count_matrix.csv`
-- **TPM Matrix**: `gene_tpm_matrix.csv`
-- **Salmon Logs**: Detailed logs for each sample’s quantification process.
+- **Quantification Results**: For each sample, the quantification results from Salmon are stored in a subdirectory under `salmon_output`, named after the sample. For example, results for sample `120128` will be stored in `/N/project/cytassist/masood_colon_300/salmon_output/120128_quant`.
+- **Gene Count Matrix**: `gene_count_matrix.csv`, located in the base directory: `/N/project/cytassist/masood_colon_300/gene_count_matrix.csv`
+- **TPM Matrix**: `gene_tpm_matrix.csv`, located in the base directory: `/N/project/cytassist/masood_colon_300/gene_tpm_matrix.csv`
+- **Salmon Logs**: Detailed logs for each sample’s quantification process are stored within the corresponding sample subdirectory in `salmon_output`.
 
 ## 🛠️ Troubleshooting: Challenges and Solutions
 
@@ -101,11 +104,17 @@ Follow these steps to get the pipeline up and running:
 
 **Solution**: The script was iteratively updated to handle Salmon’s specific requirements for alignment-based mode, ensuring proper option usage and configuration.
 
+### 5. Out of Memory (OOM) Issues
+**Problem**: Processing a large number of samples (e.g., 123 samples) led to OOM errors when the memory allocation was insufficient.
+
+**Solution**: Adjust the memory allocation by increasing the `--mem` parameter in the SLURM job script. Consider also reducing the number of threads (`-p` parameter) to reduce memory usage.
+
 ## 📊 Final Output
 
 After successfully running the pipeline, you will obtain:
-- A **gene count matrix** (`gene_count_matrix.csv`) with raw counts.
-- A **TPM matrix** (`gene_tpm_matrix.csv`) with normalized transcript abundance.
+- **Quantification Results**: Each sample's quantification output is stored in a separate subdirectory under `salmon_output`.
+- **Gene Count Matrix** (`gene_count_matrix.csv`): Located in the base directory.
+- **TPM Matrix** (`gene_tpm_matrix.csv`): Located in the base directory.
 
 These matrices are ready for downstream analysis, including differential expression analysis, clustering, and visualization.
 
@@ -118,4 +127,3 @@ If you encounter any issues or have suggestions for improvements, please open an
 ## 📄 License
 
 This project is licensed under the MIT License. See the `LICENSE` file for more details.
-
