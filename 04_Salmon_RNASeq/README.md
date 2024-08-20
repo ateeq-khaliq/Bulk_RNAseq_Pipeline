@@ -17,6 +17,23 @@
   <a href="#-license">License</a>
 </p>
 
+<h3 align="center">Pipeline Overview</h3>
+
+<p align="center">
+1. Input BAM Files<br>
+↓<br>
+2. Reference Preparation<br>
+↓<br>
+3. Salmon Quantification<br>
+↓<br>
+4. Sample Sheet Creation<br>
+↓<br>
+5. Matrix Generation<br>
+↓<br>
+6. Output Files (Gene Count and TPM Matrices)
+</p>
+
+
 <p align="center">
   <img src="https://mermaid.ink/img/pako:eNqNVE1v2zAM_SuCTh2QeEniJJ7Xw05bB2wYhmE77KaKomIztWpZKiyv8xr_91G2nI9uWNeLRD0-kXwkn1RwScFjbMRNXpLWtC2ow1fTlF0pDQBjBI8Vz4VqGxwoKGkQJRxOZoqWGniqtcUZDBPG40TIvEzO30_P4Ob2MoUPeDtIEbSGXFtJeQQH-2XvPVx5MNxDk8JCVb-Xg6d9hs3nDaApV_-ZZ7DKaqN3KH2UYwdYxW3VKrxpTnNq6YmXMhM8TYlJC0Kd6N7M4UloV0kf5Z20WG1Jvo6oJRyvOrtpeV8pYCmJVOXcEtLxArZlTSsSoG1YTXkWx18QMXA8Tcs2zR6KDE9U6v7vx4fVp6pavq5aZ3WVptQajocdLaKWWx-n8lpRbNF7cq9DRRiijVgJxpeOpYdA64xKeZi1j1SHZpnfAzwf1eR9H2Q_sA4PP_Q4Y6_bfXHc3z9so78QRLAcyd9mA1_yh_g_jrx1Y6vQKkd7QCljXfF6HHBX-QsUUlEwV1TQNhM03B1JKYUfzKmG9Nq6fkPnT0aWcmvqhLFClgLJjM4WBLCxqiBVlkc_UjFwIuNIrvPEJ-yzQUYqGMNy2RXxEeWdXXQUx4Fh3rUvdaqYVxLOOIWlBqjg2K72C15Y7hZBb3aKy9XZ6fno8-TL6XjknwMYnYxPzyaj4fFkdDQej-HT6cXFwYGb3R7jF5dHB272PobjcDhOeNuScm92nLyFO0cDONLYe0-V4yx5E6y94zVqWYIU3AfPgVJNmQiWdRYVVUZy28X-HaS8oU2b-X9dNl3UCm4hlbSNVUHB4yJzH3KVhm_UGP-MOWKOF5SUjWTbVLVL7kV4c3cFLGgY8lpcKa5Gm_iYuzCG9HXPkjgOdqt3LRWCFy5MFUNNwKTchQ5e3fwG3LZEKg" alt="Pipeline Overview" width="800">
 </p>
