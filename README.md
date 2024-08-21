@@ -1,3 +1,3 @@
 # Bulk_RNAseq_Pipeline
 
-![Research Banner](images/picture_1.3.jpg)
+![Research Banner](https://github.com/ateeq-khaliq/Bulk_RNAseq_Pipeline/blob/main/Images/bulk_rna.png)
