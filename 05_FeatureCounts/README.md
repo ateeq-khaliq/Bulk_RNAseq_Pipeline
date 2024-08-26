@@ -5,6 +5,7 @@
 - [Pipeline Overview](#pipeline-overview)
 - [Key Features](#key-features)
 - [Requirements](#requirements)
+- [Folder Structure](#folder-structure)
 - [Usage](#usage)
 - [Script Breakdown](#script-breakdown)
 - [Output](#output)
@@ -39,6 +40,34 @@ This repository contains a comprehensive RNA-seq analysis pipeline designed to p
 - featureCounts (part of the Subread package)
 - samtools
 
+## Folder Structure
+
+```
+/N/project/cytassist/masood_colon_300/
+│
+├── [sample_id]/
+│   └── RS.v2-RNA-[timestamp]/
+│       └── [sample_id]_T_sorted.bam
+│
+├── featurecounts_output/
+│   ├── gene_counts.txt
+│   ├── processed_gene_counts.csv
+│   └── analysis_info.txt
+│
+├── gencode.v19.annotation.gtf
+├── bam_files.txt
+├── process_counts.R
+└── integrated_rnaseq_pipeline.sh
+```
+
+### Input Folder Structure
+- The base directory `/N/project/cytassist/masood_colon_300/` contains subdirectories for each sample.
+- Each sample subdirectory contains an `RS.v2-RNA-[timestamp]` folder.
+- Within these folders, you'll find BAM files named `[sample_id]_T_sorted.bam`.
+
+### Output Folder
+- All output files will be in the `featurecounts_output/` directory within the base directory.
+
 ## Usage
 
 1. Clone this repository:
@@ -70,9 +99,29 @@ The main script (`integrated_rnaseq_pipeline.sh`) performs the following steps:
 
 ## Output
 
-- `gene_counts.txt`: Raw output from featureCounts
-- `processed_gene_counts.csv`: Gene-by-sample count matrix
-- `analysis_info.txt`: Information about the analysis run
+In the `featurecounts_output/` directory, you will find:
+
+1. `gene_counts.txt`: 
+   - Raw output from featureCounts
+   - Contains detailed information about the counting process
+   - Includes gene IDs, chromosome, start, end, strand, length, and counts for each sample
+
+2. `processed_gene_counts.csv`:
+   - A simplified gene-by-sample count matrix
+   - Rows represent genes, columns represent samples
+   - Values are the raw count of reads assigned to each gene in each sample
+
+3. `analysis_info.txt`:
+   - Contains metadata about the analysis run
+   - Includes information such as the date of analysis, featureCounts version, and whether data was processed as single-end or paired-end
+
+Additionally, in the base directory:
+
+4. `bam_files.txt`:
+   - A list of all BAM files processed by the pipeline
+
+5. `process_counts.R`:
+   - The R script used to convert the raw featureCounts output into the processed count matrix
 
 ## FAQs
 
@@ -88,6 +137,10 @@ A: This indicates that featureCounts has detected your data as single-end. This 
 
 A: For many applications, especially gene-level expression analysis, single-end data provides robust and reliable results. It allows for cost-effective analysis of more samples, which can be beneficial for experiments requiring larger sample sizes.
 
+**Q: What should I do if my input files are not in the expected location?**
+
+A: Modify the `BASE_DIR` variable in the script to point to the correct location of your input files. Ensure that your BAM files follow the naming convention `[sample_id]_T_sorted.bam` and are located in directories matching the structure described in the Folder Structure section.
+
 ## Troubleshooting
 
 If you encounter issues:
@@ -96,6 +149,10 @@ If you encounter issues:
 2. Ensure input BAM files are in the expected location and format
 3. Verify that the SLURM parameters match your system's capabilities
 4. Check the error log files for specific error messages
+
+Common issues:
+- If featureCounts fails to run, ensure that the annotation file (gencode.v19.annotation.gtf) is present in the base directory
+- If the R script fails, make sure the data.table package is installed in your R environment
 
 ## Contributing
 
